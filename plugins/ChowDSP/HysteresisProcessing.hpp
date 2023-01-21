@@ -1,6 +1,5 @@
 #ifndef HYSTERESISPROCESSING_H_INCLUDED
 #define HYSTERESISPROCESSING_H_INCLUDED
-#include "../constants.h"
 
 #include <cmath>
 

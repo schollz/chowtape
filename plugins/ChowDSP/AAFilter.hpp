@@ -1,7 +1,6 @@
 #pragma once
 
 #include "iir.hpp"
-#include <vector>
 
 /** 
     High-order filter to be used for anti-aliasing or anti-imaging.

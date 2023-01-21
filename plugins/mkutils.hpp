@@ -20,10 +20,12 @@ template <class Number> Number inline constrain(Number input, Number min, Number
 
 // Flush nan and inf from number to 0
 template <class Number> Number inline flushed(Number input){
-	if(!std::isfinite(input)){
-		return 0.0;
-	}
+  if(!std::isfinite(input)){
+    return 0.0;
+  }
 
-	return input;
+  return input;
 }
+
+
 } // namespace mkutils

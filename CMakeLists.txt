@@ -53,9 +53,9 @@ message(STATUS "Install directory set to: ${CMAKE_INSTALL_PREFIX}")
 
 ####################################################################################################
 # options
-option(SUPERNOVA "Build plugins for supernova" ON)
+option(SUPERNOVA "Build plugins for supernova" OFF)
 option(SCSYNTH "Build plugins for scsynth" ON)
-option(NATIVE "Optimize for native architecture" OFF)
+option(NATIVE "Optimize for native architecture" ON)
 option(STRICT "Use strict warning flags" OFF)
 option(NOVA_SIMD "Build plugins with nova-simd support." ON)
 
@@ -72,24 +72,24 @@ endif()
 # EIGEN LIBRARY
 ####################################################################################################
 
-# if(INCWERNER)
-#   # Eigen library
-#   add_subdirectory(eigen)
-# endif()
+if(INCWERNER)
+  # Eigen library
+  add_subdirectory(eigen)
+endif()
 
-# # Link plugin with eigen library
-# function(sc_link_with_eigen plugin_name)
-#   message(STATUS "Linking ${plugin_name} with eigen library")
-#   if(SCSYNTH)
-#     target_include_directories("${plugin_name}_scsynth" eigen/Eigen)
-#     target_link_libraries("${plugin_name}_scsynth" eigen)
-#   endif()
+# Link plugin with eigen library
+function(sc_link_with_eigen plugin_name)
+  message(STATUS "Linking ${plugin_name} with eigen library")
+  if(SCSYNTH)
+    target_include_directories("${plugin_name}_scsynth" eigen/Eigen)
+    target_link_libraries("${plugin_name}_scsynth" eigen)
+  endif()
 
-#   if(SUPERNOVA)
-#     target_include_directories("${plugin_name}_supernova" eigen/Eigen)
-#     target_link_libraries("${plugin_name}_supernova" eigen)
-#   endif()
-# endfunction()
+  if(SUPERNOVA)
+    target_include_directories("${plugin_name}_supernova" eigen/Eigen)
+    target_link_libraries("${plugin_name}_supernova" eigen)
+  endif()
+endfunction()
 
 ####################################################################################################
 # Plugins
@@ -101,51 +101,130 @@ install(
   DESTINATION "${project_name}/HelpSource"
 )
 
-# AnalogTape
+# # AnalogTape
+# set(
+#   AnalogTape_cpp_files
+#   plugins/ChowDSP/AnalogTape.hpp
+#   plugins/ChowDSP/AnalogTape.cpp
+#   # plugins/ChowDSP/HysteresisProcessing.hpp
+#   # plugins/ChowDSP/HysteresisProcessing.cpp
+# )
+# set(
+#   AnalogTape_sc_files
+#   plugins/ChowDSP/AnalogTape.sc
+# )
+# set(
+#   AnalogTape_schelp_files
+#   plugins/ChowDSP/AnalogTape.schelp
+# )
+
+# sc_add_server_plugin(
+#   "${project_name}" # destination directory
+#   "AnalogTape" # target name
+#   "${AnalogTape_cpp_files}"
+#   "${AnalogTape_sc_files}"
+#   "${AnalogTape_schelp_files}"
+# )
+
+
+# # AnalogVintageDistortion
+# set(
+#   AnalogVintageDistortion_cpp_files
+#   plugins/ChowDSP/AnalogVintageDistortion.hpp
+#   plugins/ChowDSP/AnalogVintageDistortion.cpp
+# )
+# set(
+#   AnalogVintageDistortion_sc_files
+#   plugins/ChowDSP/AnalogVintageDistortion.sc
+# )
+# set(
+#   AnalogVintageDistortion_schelp_files
+#   plugins/ChowDSP/AnalogVintageDistortion.schelp
+# )
+
+# sc_add_server_plugin(
+#   "${project_name}" # destination directory
+#   "AnalogVintageDistortion" # target name
+#   "${AnalogVintageDistortion_cpp_files}"
+#   "${AnalogVintageDistortion_sc_files}"
+#   "${AnalogVintageDistortion_schelp_files}"
+# )
+
+
+# AnalogLoss
 set(
-  AnalogTape_cpp_files
-  plugins/ChowDSP/AnalogTape.hpp
-  plugins/ChowDSP/AnalogTape.cpp
+  AnalogLoss_cpp_files
+  plugins/ChowDSP/AnalogLoss.hpp
+  plugins/ChowDSP/AnalogLoss.cpp
   # plugins/ChowDSP/HysteresisProcessing.hpp
   # plugins/ChowDSP/HysteresisProcessing.cpp
 )
 set(
-  AnalogTape_sc_files
-  plugins/ChowDSP/AnalogTape.sc
+  AnalogLoss_sc_files
+  plugins/ChowDSP/AnalogLoss.sc
 )
 set(
-  AnalogTape_schelp_files
-  plugins/ChowDSP/AnalogTape.schelp
+  AnalogLoss_schelp_files
+  plugins/ChowDSP/AnalogLoss.schelp
 )
 
 sc_add_server_plugin(
   "${project_name}" # destination directory
-  "AnalogTape" # target name
-  "${AnalogTape_cpp_files}"
-  "${AnalogTape_sc_files}"
-  "${AnalogTape_schelp_files}"
+  "AnalogLoss" # target name
+  "${AnalogLoss_cpp_files}"
+  "${AnalogLoss_sc_files}"
+  "${AnalogLoss_schelp_files}"
 )
 
 
-# AnalogVintageDistortion
+
+# AnalogDegrade
 set(
-  AnalogVintageDistortion_cpp_files
-  plugins/ChowDSP/AnalogVintageDistortion.hpp
-  plugins/ChowDSP/AnalogVintageDistortion.cpp
+  AnalogDegrade_cpp_files
+  plugins/ChowDSP/AnalogDegrade.hpp
+  plugins/ChowDSP/AnalogDegrade.cpp
+  # plugins/ChowDSP/HysteresisProcessing.hpp
+  # plugins/ChowDSP/HysteresisProcessing.cpp
 )
 set(
-  AnalogVintageDistortion_sc_files
-  plugins/ChowDSP/AnalogVintageDistortion.sc
+  AnalogDegrade_sc_files
+  plugins/ChowDSP/AnalogDegrade.sc
 )
 set(
-  AnalogVintageDistortion_schelp_files
-  plugins/ChowDSP/AnalogVintageDistortion.schelp
+  AnalogDegrade_schelp_files
+  plugins/ChowDSP/AnalogDegrade.schelp
 )
 
 sc_add_server_plugin(
   "${project_name}" # destination directory
-  "AnalogVintageDistortion" # target name
-  "${AnalogVintageDistortion_cpp_files}"
-  "${AnalogVintageDistortion_sc_files}"
-  "${AnalogVintageDistortion_schelp_files}"
+  "AnalogDegrade" # target name
+  "${AnalogDegrade_cpp_files}"
+  "${AnalogDegrade_sc_files}"
+  "${AnalogDegrade_schelp_files}"
+)
+
+
+# AnalogChew
+set(
+  AnalogChew_cpp_files
+  plugins/ChowDSP/AnalogChew.hpp
+  plugins/ChowDSP/AnalogChew.cpp
+  # plugins/ChowDSP/HysteresisProcessing.hpp
+  # plugins/ChowDSP/HysteresisProcessing.cpp
+)
+set(
+  AnalogChew_sc_files
+  plugins/ChowDSP/AnalogChew.sc
+)
+set(
+  AnalogChew_schelp_files
+  plugins/ChowDSP/AnalogChew.schelp
+)
+
+sc_add_server_plugin(
+  "${project_name}" # destination directory
+  "AnalogChew" # target name
+  "${AnalogChew_cpp_files}"
+  "${AnalogChew_sc_files}"
+  "${AnalogChew_schelp_files}"
 )
